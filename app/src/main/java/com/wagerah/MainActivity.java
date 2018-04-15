@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Uri uri = getIntent().getData();
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Uri uri = intent.getData();
         if (uri != null && uri.toString().startsWith("wagerah://callback")) {
             // use the parameter your API exposes for the code (mostly it's "code")
             String code = uri.getQueryParameter("code");
@@ -64,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void uberLogin() {
 
         String test_url  = "https://en.wikipedia.org/wiki/Internet";
 //        String another_url  = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=saJHcmpxmjuGezNO0gHDJeN_Z32zMtFr&scope=all_trips+history+history_lite+places+profile+request+request_receipt+ride_widgets&redirect_uri=wagerah://callback";
         String loginUrl = String.format("https://login.uber.com/oauth/v2/authorize?client_id=%s" +
                 "&response_type=code&scope=all_trips+history+history_lite+places+profile+request+request_receipt+ride_widgets" +
-                "&redirect_uri=%s", CLIENT_ID,"wagerah://aaz");
+                "&redirect_uri=%s", CLIENT_ID,"wagerah://callback");
 
 
         Intent intent = new Intent(  Intent.ACTION_VIEW,   Uri.parse(loginUrl));
